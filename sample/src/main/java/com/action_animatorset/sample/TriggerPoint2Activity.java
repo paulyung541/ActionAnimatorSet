@@ -62,10 +62,10 @@ public class TriggerPoint2Activity extends AppCompatActivity {
         animSet.addAnimBetween(anim2, anim1, new TriggerPoint<AnimPoint>() {
             @Override
             public boolean whenToStart(AnimPoint pointV) {
-                return pointV.mEndX < -centerP.x + 100;//自定义何时开始anim2动画
+                return pointV.mEndX < -centerP.x + 100;//自定义何时开始anim2动画，此方法返回true时，anim2开始执行
             }
         });
-        animSet.addAnimWith(anim3, anim2);//anim2和anim3同时执行
+        animSet.addAnimWith(anim3, anim2);//anim3和anim2同时执行
         animSet.start();
     }
 
