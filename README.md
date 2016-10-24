@@ -4,31 +4,31 @@
 在开发中经常会遇到，控制多个属性动画协同合作的这种需求，比如先调用动画A，再同时调用动画B和C；亦或是在A执行了一半的时候，再调用动画B之类的。Android的SDK提供了AnimationSet，可以操作多个动画的播放顺序。但**ActionAnimatorSet**提供了更加丰富的操作，譬如动画在执行了某一时刻触发另一个（组）动画。
 
 ##效果演示
-***
+
 * 1 同时执行
-![image](https://github.com/paulyung541/Interface_doc/blob/master/gif_res/together.gif)
+![image](https://github.com/paulyung541/ActionAnimatorSet/blob/master/gif_res/together.gif)
 
 * 2 顺序执行
-![image](https://github.com/paulyung541/Interface_doc/blob/master/gif_res/sequence.gif)
+![image](https://github.com/paulyung541/ActionAnimatorSet/blob/master/gif_res/sequence.gif)
 
 * 3 精确某一点（值为int，float）
-![image](https://github.com/paulyung541/Interface_doc/blob/master/gif_res/point1.gif)
+![image](https://github.com/paulyung541/ActionAnimatorSet/blob/master/gif_res/point1.gif)
 
 * 4 精确某一点（值为Object）
-![image](https://github.com/paulyung541/Interface_doc/blob/master/gif_res/point2.gif)
+![image](https://github.com/paulyung541/ActionAnimatorSet/master/gif_res/point2.gif)
 
 ##与AnimatorSet相同点
-***
-提供```playTogether() --- 同时执行多个动画```和```playSequence() --- 顺序执行多个动画```两个方法
+
+提供```playTogether()``` 同时执行多个动画和```playSequence()```顺序执行多个动画两个方法
 
 ##比与AnimatorSet异同点
-***
+
 * 1 **封装了动画监听**：```Animator.AnimatorListener```，不用单独再给属性动画设置监听器，直接用```addStartAction(Animator anim, Action start)```和```addEndAction(Animator anim, Action end)```可以监听动画执行前和动画执行后的动作，```Action```代表了一个动作。
 * 2 **动画的精准控制**：允许某个动画执行到某个点时，控制其它动画的开始
 
 
 ##主要使用的方法
-***
+
 ```
 playFirst(Animator... anims)//添加头，最先执行
 playTogether(Animator... anims)//同时执行，和playFirst作用是一样的
@@ -43,7 +43,7 @@ addEndAction(Animator A, Action end);//给A动画添加动画结束时的监听
 ```
 
 ##添加动画的方式
-***
+
 在**ActionAnimatorSet**里面添加动画，需要添加一个头，然后依次添加动画和指明该动画所依赖的动画，如需精确控制开始点，还需参数指明。
 
 ###示例1（简单的同时执行）
@@ -102,7 +102,7 @@ animSet.addAnimWith(C, B);//添加C，和B同时执行
 ```
 
 ##最大特色
-***
+
 **TriggerPoint**定义了一个触发时刻点，允许用户定义该点来精确控制一组动画的执行时刻，并支持```Object```类型的属性动画Vaule
 * 1 当ObjectAnimator的Value为Int或者float类型时，直接通过构造函数传入参数，指定触发时刻
   eg: ```new TriggerPoint(0.3);```
@@ -112,6 +112,6 @@ animSet.addAnimWith(C, B);//添加C，和B同时执行
 
 ##最后
 更多详情请看Sample项目
-***
+
 
 
