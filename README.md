@@ -5,16 +5,16 @@
 
 ##效果演示
 
-* 1 同时执行
+* 1 同时执行<br/>
 ![image](https://github.com/paulyung541/ActionAnimatorSet/blob/master/gif_res/together.gif)
 
-* 2 顺序执行
+* 2 顺序执行<br/>
 ![image](https://github.com/paulyung541/ActionAnimatorSet/blob/master/gif_res/sequence.gif)
 
-* 3 精确某一点（值为int，float）
+* 3 精确某一点（值为int，float）<br/>
 ![image](https://github.com/paulyung541/ActionAnimatorSet/blob/master/gif_res/point1.gif)
 
-* 4 精确某一点（值为Object）
+* 4 精确某一点（值为Object）<br/>
 ![image](https://github.com/paulyung541/ActionAnimatorSet/master/gif_res/point2.gif)
 
 ##与AnimatorSet相同点
