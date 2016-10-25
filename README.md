@@ -21,7 +21,7 @@
 
 提供```playTogether()``` 同时执行多个动画和```playSequence()```顺序执行多个动画两个方法
 
-##比与AnimatorSet异同点
+##与AnimatorSet异同点
 
 * 1 **封装了动画监听**：```Animator.AnimatorListener```，不用单独再给属性动画设置监听器，直接用```addStartAction(Animator anim, Action start)```和```addEndAction(Animator anim, Action end)```可以监听动画执行前和动画执行后的动作，```Action```代表了一个动作。
 * 2 **动画的精准控制**：允许某个动画执行到某个点时，控制其它动画的开始
@@ -77,7 +77,7 @@ A先播放，B在A的值达到600的时候播放，C在B达到600时候播放
 ```
 animSet.playFirst(A);//A作为头，最先执行
 animSet.addAnimBetween(B, A, new TriggerPoint(600));
-animSet.addAnimBetween(C, A, new TriggerPoint(600));
+animSet.addAnimBetween(C, B, new TriggerPoint(600));
 ```
 以上这个例子是动画的值为```Float```的情况，如果值为```Int```型也按照这种构造函数的方式传入开始点
 
@@ -112,6 +112,3 @@ animSet.addAnimWith(C, B);//添加C，和B同时执行
 
 ##最后
 更多详情请看Sample项目
-
-
-

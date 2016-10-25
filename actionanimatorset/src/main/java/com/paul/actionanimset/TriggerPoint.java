@@ -42,15 +42,16 @@ public class TriggerPoint<T> {
         return res;
     }
 
-    //如果传入的不是普通类型，则需重写此方法
-    //在方法内判断时尽量使用 '>'  而不要使用 '='
-    //此时这样做，精确度不如普通类型经过计算找的那个点准确
-    //但是也不会差远，是距离设定值最近的那两个点的较大一个的值对应的时刻触发动画
+    /**
+     * if the param is not a value-type such as int and float etc, you must
+     * overwrite this method.It would be best to use '>' or '<', but not to
+     * use a '=',because the value could not be so accurate.
+     * */
     public boolean whenToStart(T o) {
         return false;
     }
 
-    //计算什么时候和设定值最接近
+    //compare the set-value and calculate-value whether effective or not
     private boolean calculate() {
         return Math.abs(v1v2.getFirst() - value_int) < Math.abs(v1v2.getLast() - value_int);
     }

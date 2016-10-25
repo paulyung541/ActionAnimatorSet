@@ -15,8 +15,8 @@ public class AnimEvaluator implements TypeEvaluator<AnimPoint> {
     @Override
     public AnimPoint evaluate(float fraction, AnimPoint startValue, AnimPoint endValue) {
         float x = 0f, y = 0f;
-                x = calculateCubic(fraction, startValue.mEndX, endValue.mCtlX1, endValue.mCtlX2, endValue.mEndX);
-                y = calculateCubic(fraction, startValue.mEndY, endValue.mCtlY1, endValue.mCtlY2, endValue.mEndY);
+        x = calculateCubic(fraction, startValue.mEndX, endValue.mCtlX1, endValue.mCtlX2, endValue.mEndX);
+        y = calculateCubic(fraction, startValue.mEndY, endValue.mCtlY1, endValue.mCtlY2, endValue.mEndY);
 
         return AnimPoint.newInstance(x, y);
     }

@@ -1,0 +1,120 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+//def siteUrl = 'https://github.com/paulyung541/ActionAnimatorSet'
+//def gitUrl = 'https://github.com/paulyung541/ActionAnimatorSet.git'
+//group = "com.paulyung" // Maven Group ID for the artifact
+//version = "1.0.0"
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+    resourcePrefix "随便填"
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+//install {
+//    repositories.mavenInstaller {
+//        // This generates POM.xml with proper parameters
+//        pom {
+//            project {
+//                packaging 'aar'
+//                name 'ActionAnimatorSet'
+//                description 'An animator operation set on Android'
+//                url siteUrl
+//                licenses {
+//                    license {
+//                        name 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
+//                        url 'http://www.gnu.org/philosophy/why-not-lgpl.html'
+//                    }
+//                }
+//                developers {
+//                    developer {
+//                        id 'paulyung'
+//                        name 'paulyung'
+//                        email 'paulyung@outlook.com'
+//                    }
+//                }
+//                scm {
+//                    connection gitUrl
+//                    developerConnection gitUrl
+//                    url siteUrl
+//                }
+//            }
+//        }
+//    }
+//}
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+//}
+//Properties properties = new Properties()
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//bintray {
+//    user = properties.getProperty("bintray.user")
+//    key = properties.getProperty("bintray.apikey")
+//    configurations = ['archives']
+//    pkg {
+//        repo = "maven2"
+//        name = "actionanimatorset"
+//        websiteUrl = siteUrl
+//        vcsUrl = gitUrl
+//        licenses = ["GNU-3.0"]
+//        publish = true
+//    }
+//}
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'actionanimatorset'
+
+    publishedGroupId = 'com.paulyung'
+    libraryName = 'actionanimatorset'
+    artifact = 'actionanimatorset'
+
+    libraryDescription = 'An animator operation set on Android'
+
+    siteUrl = 'https://github.com/paulyung541/ActionAnimatorSet'
+    gitUrl = 'https://github.com/paulyung541/ActionAnimatorSet.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'paulyung'
+    developerName = 'paulyung'
+    developerEmail = 'paulyung@outlook.com'
+
+    licenseName = 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
+    licenseUrl = 'http://www.gnu.org/philosophy/why-not-lgpl.html'
+    allLicenses = ["GNU-3.0"]
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
