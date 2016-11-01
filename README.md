@@ -3,6 +3,9 @@
 
 在开发中经常会遇到，控制多个属性动画协同合作的这种需求，比如先调用动画A，再同时调用动画B和C；亦或是在A执行了一半的时候，再调用动画B之类的。Android的SDK提供了AnimationSet，可以操作多个动画的播放顺序。但**ActionAnimatorSet**提供了更加丰富的操作，譬如动画在执行了某一时刻触发另一个（组）动画。
 
+##添加依赖
+>compile 'com.paulyung:actionanimatorset:1.0.0'</br>
+
 ##效果演示
 
 * 1 同时执行<br/>
