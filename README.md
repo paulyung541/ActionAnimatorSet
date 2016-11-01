@@ -30,16 +30,16 @@
 ##主要使用的方法
 
 ```java
-playFirst(Animator... anims)//添加头，最先执行
-playTogether(Animator... anims)//同时执行，和playFirst作用是一样的
-playSequence(Animator... anims)//顺序执行
+void playFirst(Animator... anims)//添加头，最先执行
+void playTogether(Animator... anims)//同时执行，和playFirst作用是一样的
+void playSequence(Animator... anims)//顺序执行
 
-addAnimWith(Animator A, Animator B)//将A添加进去，并和B同时开始播放，主要用作一些不是头部，又需要同时操作的动画
-addAnimAfter(Animator A, Animator B)//将A添加进去，并在B播放完之后，开始播放
-addAnimBetween(Animator A, Animator B, TriggerPoint startPoint)//将A添加进去，并定义了一个开始点TriggerPoint ，在B播放到这个点时，开始播放A
+void addAnimWith(Animator A, Animator B)//将A添加进去，并和B同时开始播放，主要用作一些不是头部，又需要同时操作的动画
+void addAnimAfter(Animator A, Animator B)//将A添加进去，并在B播放完之后，开始播放
+void addAnimBetween(Animator A, Animator B, TriggerPoint startPoint)//将A添加进去，并定义了一个开始点TriggerPoint ，在B播放到这个点时，开始播放A
 
-addStartAction(Animator A, Action start);//给A动画添加动画开始时的监听
-addEndAction(Animator A, Action end);//给A动画添加动画结束时的监听
+void addStartAction(Animator A, Action start);//给A动画添加动画开始时的监听
+void addEndAction(Animator A, Action end);//给A动画添加动画结束时的监听
 ```
 
 ##添加动画的方式
