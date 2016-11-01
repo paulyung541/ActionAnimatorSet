@@ -1,16 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-
-//def siteUrl = 'https://github.com/paulyung541/ActionAnimatorSet'
-//def gitUrl = 'https://github.com/paulyung541/ActionAnimatorSet.git'
-//group = "com.paulyung" // Maven Group ID for the artifact
-//version = "1.0.0"
-
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
-    resourcePrefix "随便填"
+    resourcePrefix "aaa"
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 24
@@ -29,92 +23,81 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-//install {
-//    repositories.mavenInstaller {
-//        // This generates POM.xml with proper parameters
-//        pom {
-//            project {
-//                packaging 'aar'
-//                name 'ActionAnimatorSet'
-//                description 'An animator operation set on Android'
-//                url siteUrl
-//                licenses {
-//                    license {
-//                        name 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
-//                        url 'http://www.gnu.org/philosophy/why-not-lgpl.html'
-//                    }
-//                }
-//                developers {
-//                    developer {
-//                        id 'paulyung'
-//                        name 'paulyung'
-//                        email 'paulyung@outlook.com'
-//                    }
-//                }
-//                scm {
-//                    connection gitUrl
-//                    developerConnection gitUrl
-//                    url siteUrl
-//                }
-//            }
-//        }
-//    }
-//}
-//task sourcesJar(type: Jar) {
-//    from android.sourceSets.main.java.srcDirs
-//    classifier = 'sources'
-//}
-//task javadoc(type: Javadoc) {
-//    source = android.sourceSets.main.java.srcDirs
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//}
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//}
-//artifacts {
-//    archives javadocJar
-//    archives sourcesJar
-//}
-//Properties properties = new Properties()
-//properties.load(project.rootProject.file('local.properties').newDataInputStream())
-//bintray {
-//    user = properties.getProperty("bintray.user")
-//    key = properties.getProperty("bintray.apikey")
-//    configurations = ['archives']
-//    pkg {
-//        repo = "maven2"
-//        name = "actionanimatorset"
-//        websiteUrl = siteUrl
-//        vcsUrl = gitUrl
-//        licenses = ["GNU-3.0"]
-//        publish = true
-//    }
-//}
+version = "1.0.0"
 
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'actionanimatorset'
+def siteUrl = 'https://github.com/paulyung541/ActionAnimatorSet'
+def gitUrl = 'git@github.com:paulyung541/ActionAnimatorSet.git'
 
-    publishedGroupId = 'com.paulyung'
-    libraryName = 'actionanimatorset'
-    artifact = 'actionanimatorset'
+group = "com.paulyung"
 
-    libraryDescription = 'An animator operation set on Android'
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'ActionAnimationSet'
+                description 'An Animation operation Set.'
+                url siteUrl
 
-    siteUrl = 'https://github.com/paulyung541/ActionAnimatorSet'
-    gitUrl = 'https://github.com/paulyung541/ActionAnimatorSet.git'
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
 
-    libraryVersion = '1.0.0'
+                developers {
+                    developer {
+                        id 'paulyung'
+                        name 'paulyung'
+                        email 'paulyung@outlook.com'
+                    }
+                }
 
-    developerId = 'paulyung'
-    developerName = 'paulyung'
-    developerEmail = 'paulyung@outlook.com'
-
-    licenseName = 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
-    licenseUrl = 'http://www.gnu.org/philosophy/why-not-lgpl.html'
-    allLicenses = ["GNU-3.0"]
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    // destinationDir = file("../javadoc/")
+    failOnError false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "MAVEN"  // 上传到maven库。
+        userOrg = "paulyung" //bintray这逼改版了，少了这个属性，卡了老子一星期啊！！！
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true // 是否是公开项目。
+    }
+}
