@@ -23,7 +23,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-version = "1.0.0"
+version = "1.0.1"
 
 def siteUrl = 'https://github.com/paulyung541/ActionAnimatorSet'
 def gitUrl = 'git@github.com:paulyung541/ActionAnimatorSet.git'
@@ -94,6 +94,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "MAVEN"  // 上传到maven库。
+        name = 'ActionAnimationSet'
         userOrg = "paulyung" //bintray这逼改版了，少了这个属性，卡了老子一星期啊！！！
         websiteUrl = siteUrl
         vcsUrl = gitUrl
@@ -101,3 +102,41 @@ bintray {
         publish = true // 是否是公开项目。
     }
 }
+
+
+//
+//group = 'com.paulyung'
+//version = '1.0.1'
+//Properties properties = new Properties()
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//bintray {
+//    user = properties.getProperty("bintray.user")
+//    key = properties.getProperty("bintray.apikey")
+//
+//    //Package configuration. The plugin will use the repo and name properties to check if the package already exists. In that case, there's no need to configure the other package properties (like userOrg, desc, etc).
+//    pkg {
+//        repo = 'MAVEN'
+//        name = 'ActionAnimationSet'
+//        userOrg = 'paulyung' //An optional organization name when the repo belongs to one of the user's orgs
+//        websiteUrl = siteUrl
+//        vcsUrl = gitUrl
+//        licenses = ['Apache-2.0']
+//        labels = ['Android', 'Animator']
+//        publicDownloadNumbers = true
+//
+//        githubRepo = 'bintray/gradle-bintray-plugin' //Optional Github repository
+//        githubReleaseNotesFile = 'README.md' //Optional Github readme file
+//
+//        //Optional version descriptor
+//        version {
+//            name = '1.0.1' //Bintray logical version name
+//            desc = 'modify some bugs'
+//
+//            vcsTag = '1.0.1'
+//            //Optional configuration for GPG signing
+//            gpg {
+//                sign = true //Determines whether to GPG sign the files. The default is false
+//            }
+//        }
+//    }
+//}
