@@ -175,6 +175,7 @@ public class ActionAnimatorSet {
         static final int BETWEEN = 3;//在动画运行到某一个值时
 
         int rule;//就是以上三条规则
+        boolean isCancel;
 
         Animator mAnim;
         Action startAciton;
@@ -355,7 +356,7 @@ public class ActionAnimatorSet {
         }
     }
 
-    private static final class ActionListener implements Animator.AnimatorListener {
+    private final class ActionListener implements Animator.AnimatorListener {
         private Action start, end;
         private boolean hasCancelled;
 
@@ -366,8 +367,10 @@ public class ActionAnimatorSet {
 
         @Override
         public void onAnimationStart(Animator animation) {
-            if (start != null)
+            AnimNode node = mNodeMap.get(animation);
+            if (!node.isCancel && start != null)
                 start.doAction();
+            node.isCancel = false;
         }
 
         @Override
@@ -394,19 +397,22 @@ public class ActionAnimatorSet {
     private static final class StatusObservable extends Observable<AnimNode> {
         //with after
         void start() {
-            for (AnimNode node : mObservers)
-                node.mAnim.start();
+            for (int i = 0; i < mObservers.size(); ++i) {
+                mObservers.get(i).mAnim.start();
+            }
         }
 
         void betweenToStart(Object value) {
             if (BuildConfig.DEBUG)
                 Log.d(TAG, "betweenToStart: value: " + value);
-            for (AnimNode node : mObservers)
+            for (int i = 0; i < mObservers.size(); ++i) {
+                AnimNode node = mObservers.get(i);
                 if (!node.mAnim.isRunning() && node.startPoint.equals(value)) {
                     node.mAnim.start();
                     if (value instanceof Float || value instanceof Integer)
                         node.startPoint.clear();
                 }
+            }
         }
 
         int size() {
@@ -425,8 +431,8 @@ public class ActionAnimatorSet {
         addActionListener();
 
         //start animators
-        for (AnimNode node : mNoDepNodes) {
-            node.mAnim.start();
+        for (int i = 0; i < mNoDepNodes.size(); ++i) {
+            mNoDepNodes.get(i).mAnim.start();
         }
     }
 
@@ -434,13 +440,15 @@ public class ActionAnimatorSet {
      * 取消动画
      */
     public void cancel() {
-        for (AnimNode node : mAllNodes)
-            if (node.mAnim.isStarted())
-                node.mAnim.cancel();
+        for (int i = 0; i < mAllNodes.size(); ++i) {
+            mAllNodes.get(i).isCancel = true;
+            mAllNodes.get(i).mAnim.cancel();
+        }
     }
 
     private void addActionListener() {
-        for (AnimNode node : mAllNodes) {
+        for (int i = 0; i < mAllNodes.size(); ++i) {
+            AnimNode node = mAllNodes.get(i);
             boolean hasStart = node.startAciton != null;
             boolean hasEnd = node.endAction != null;
             if (hasStart || hasEnd)
@@ -451,7 +459,8 @@ public class ActionAnimatorSet {
     private void addObservable() {
         //如果是With和After的，则设置AnimatorListener监听，With和After共用一个监听
         //如果是Between的，则设置UpdateListener监听
-        for (AnimNode node : mAllNodes) {
+        for (int i = 0; i < mAllNodes.size(); ++i) {
+            AnimNode node = mAllNodes.get(i);
             if (node.withAbservable != null
                     && node.withAbservable.size() > 0)
                 node.mAnim.addListener(new WithAndAfterListener(node));
@@ -464,9 +473,7 @@ public class ActionAnimatorSet {
                     node.betweenAbservable.size() > 0)
                 if (node.mAnim instanceof ValueAnimator)
                     ((ValueAnimator) node.mAnim).addUpdateListener(new BetweenListener(node));
-
         }
-
     }
 
     //给未添加依赖的节点，加入依赖关系，以一对多的形式出现
