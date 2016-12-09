@@ -6,10 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.paul.actionanimset.ActionAnimatorSet;
+import com.paul.actionanimset.AnimatorManager;
+import com.paul.actionanimset.DefaultAnimatorManager;
 
 public class TogetherActivity extends AppCompatActivity {
     View view1, view2, view3;
     ActionAnimatorSet animSet;
+    AnimatorManager manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,16 +26,13 @@ public class TogetherActivity extends AppCompatActivity {
         ObjectAnimator view1Anim = ObjectAnimator.ofFloat(view1, "y", 1200);
         ObjectAnimator view2Anim = ObjectAnimator.ofFloat(view2, "y", 1200);
         ObjectAnimator view3Anim = ObjectAnimator.ofFloat(view3, "y", 1200);
-        view1Anim.setDuration(2000);
-        view2Anim.setDuration(2000);
-        view3Anim.setDuration(2000);
 
-        view1Anim.setStartDelay(1000);
-        view2Anim.setStartDelay(1000);
-        view3Anim.setStartDelay(1000);
+        manager = new DefaultAnimatorManager();
 
-        animSet = new ActionAnimatorSet();
+        animSet = manager.createAnimatorSet();
         animSet.playTogether(view1Anim, view2Anim, view3Anim);
+        animSet.setDuration(2000);
+        animSet.setStartDelay(1000);
         animSet.start();
     }
 

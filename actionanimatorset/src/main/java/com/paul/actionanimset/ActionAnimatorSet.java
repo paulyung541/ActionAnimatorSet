@@ -24,11 +24,15 @@ public class ActionAnimatorSet {
     private MultiMap<Animator, Builder> mTmpDep;//用来记录在初始化调用addAnimAfter()等函数时，未加入依赖的，在开始动画前，需要加入依赖关系
     private ArrayList<AnimNode> mNoDepNodes;//没有依赖的节点（会同时最先执行的节点）,不是最先执行的动画，需要在后面添加 with 依赖
 
-    public ActionAnimatorSet() {
+    private ActionAnimatorSet() {
         mAllNodes = new ArrayList<>();
         mNoDepNodes = new ArrayList<>();
         mNodeMap = new HashMap<>();
         mTmpDep = new MultiMap<>();
+    }
+
+    public static ActionAnimatorSet getInstance() {
+        return new ActionAnimatorSet();
     }
 
     //最先执行的动画，效果与 playTogether 相同，只是便于调用者理解
@@ -169,17 +173,13 @@ public class ActionAnimatorSet {
     /**
      * 定义了一个节点，一个动画对应一个节点
      */
-    private static class AnimNode {
+    private static class AnimNode extends ActionNode {
         static final int WITH = 1;//想和某个非首次执行动画同时执行
         static final int AFTER = 2;//在某个动画执行完成之后执行
         static final int BETWEEN = 3;//在动画运行到某一个值时
 
         int rule;//就是以上三条规则
-        boolean isCancel;
 
-        Animator mAnim;
-        Action startAciton;
-        Action endAction;
         TriggerPoint startPoint;//所依赖的node执行到某个点时，触发动画
 
         //一个节点只允许依赖一个，但是可以被依赖多个
@@ -215,13 +215,6 @@ public class ActionAnimatorSet {
                     betweenAbservable.registerObserver(animDep);
             }
         }
-    }
-
-    /**
-     * 动画运行前后，以及运行到某个点时，触发的动作
-     */
-    public interface Action {
-        void doAction();
     }
 
     /**
@@ -429,10 +422,29 @@ public class ActionAnimatorSet {
         //给有别的动画依赖自己的节点设置监听
         addObservable();
         addActionListener();
+        clearDependDelay();//所有有依赖的动画节点，清除delay时间（不允许delay）
 
         //start animators
         for (int i = 0; i < mNoDepNodes.size(); ++i) {
             mNoDepNodes.get(i).mAnim.start();
+        }
+    }
+
+
+    public void setStartDelay(long startDelay) {
+        if (mNoDepNodes.isEmpty())
+            throw new IllegalStateException("there have no NoDepNodes, please add Animator first");
+        for (int i = 0; i < mNoDepNodes.size(); ++i) {
+            AnimNode node = mNoDepNodes.get(i);
+            node.mAnim.setStartDelay(startDelay);
+        }
+    }
+
+    public void setDuration(long duration) {
+        if (mNoDepNodes.isEmpty())
+            throw new IllegalStateException("there have no NoDepNodes, please add Animator first");
+        for (int i = 0; i < mAllNodes.size(); ++i) {
+            mAllNodes.get(i).mAnim.setDuration(duration);
         }
     }
 
@@ -443,6 +455,14 @@ public class ActionAnimatorSet {
         for (int i = 0; i < mAllNodes.size(); ++i) {
             mAllNodes.get(i).isCancel = true;
             mAllNodes.get(i).mAnim.cancel();
+        }
+    }
+
+    private void clearDependDelay() {
+        for (int i = 0; i < mAllNodes.size(); i++) {
+            AnimNode node = mAllNodes.get(i);
+            if (node.mDependentNode != null)
+                node.mAnim.setStartDelay(0);
         }
     }
 

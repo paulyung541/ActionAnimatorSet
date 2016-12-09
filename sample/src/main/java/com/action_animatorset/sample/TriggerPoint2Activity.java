@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import com.action_animatorset.sample.evaluator.AnimEvaluator;
 import com.action_animatorset.sample.evaluator.AnimPoint;
 import com.paul.actionanimset.ActionAnimatorSet;
+import com.paul.actionanimset.AnimatorManager;
+import com.paul.actionanimset.DefaultAnimatorManager;
 import com.paul.actionanimset.TriggerPoint;
 
 public class TriggerPoint2Activity extends AppCompatActivity {
@@ -21,6 +23,7 @@ public class TriggerPoint2Activity extends AppCompatActivity {
     FloatingActionButton fab;
     ActionAnimatorSet animSet;
     PointF centerP;
+    AnimatorManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +49,15 @@ public class TriggerPoint2Activity extends AppCompatActivity {
     }
 
     private void initAnim(View v) {
-        animSet = new ActionAnimatorSet();
+        manager = new DefaultAnimatorManager();
+        animSet = manager.createAnimatorSet();
+
         AnimPoint startPoint = AnimPoint.newInstance(0, 0);
         AnimPoint endPoint = cubicTo(0, 0, 0.86f, 0, -centerP.x, -centerP.y);
         ObjectAnimator anim1 = ObjectAnimator.ofObject(this,
                 "Anim", new AnimEvaluator(), startPoint, endPoint);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(v, "scaleX", 1, 20);
         ObjectAnimator anim3 = ObjectAnimator.ofFloat(v, "scaleY", 1, 20);
-
-        anim1.setDuration(ANIM_TIME);
-        anim2.setDuration(ANIM_TIME);
-        anim3.setDuration(ANIM_TIME);
 
         animSet.playFirst(anim1);
         animSet.addAnimBetween(anim2, anim1, new TriggerPoint<AnimPoint>() {
@@ -66,6 +67,8 @@ public class TriggerPoint2Activity extends AppCompatActivity {
             }
         });
         animSet.addAnimWith(anim3, anim2);//anim3和anim2同时执行
+        animSet.setDuration(ANIM_TIME);
+
         animSet.start();
     }
 

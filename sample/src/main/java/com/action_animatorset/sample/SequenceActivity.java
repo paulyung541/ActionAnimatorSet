@@ -6,11 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.paul.actionanimset.Action;
 import com.paul.actionanimset.ActionAnimatorSet;
+import com.paul.actionanimset.AnimatorManager;
+import com.paul.actionanimset.DefaultAnimatorManager;
 
 public class SequenceActivity extends AppCompatActivity {
     View view1, view2, view3;
+    AnimatorManager manager;
     ActionAnimatorSet animSet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,29 +28,27 @@ public class SequenceActivity extends AppCompatActivity {
         ObjectAnimator view1Anim = ObjectAnimator.ofFloat(view1, "y", 1200);
         ObjectAnimator view2Anim = ObjectAnimator.ofFloat(view2, "y", 1200);
         ObjectAnimator view3Anim = ObjectAnimator.ofFloat(view3, "y", 1200);
-        view1Anim.setDuration(2000);
-        view2Anim.setDuration(2000);
-        view3Anim.setDuration(2000);
 
-        view1Anim.setStartDelay(1000);
+        manager = new DefaultAnimatorManager();
 
-        animSet = new ActionAnimatorSet();
+        animSet = manager.createAnimatorSet();
         animSet.playSequence(view1Anim, view2Anim, view3Anim);
+        animSet.setDuration(2000);
+        animSet.setStartDelay(1000);
 
         //设置Action，可在动画执行前后做一些处理，这样就不用单独再给动画设置监听了
-        animSet.addStartAction(view1Anim, new ActionAnimatorSet.Action() {
+        animSet.addStartAction(view1Anim, new Action() {
             @Override
             public void doAction() {
                 showToast("动画开始");
             }
         });
-        animSet.addEndAction(view3Anim, new ActionAnimatorSet.Action() {
+        animSet.addEndAction(view3Anim, new Action() {
             @Override
             public void doAction() {
                 showToast("动画结束了");
             }
         });
-
 
         animSet.start();
     }

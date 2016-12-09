@@ -31,4 +31,9 @@ public class MainActivity extends AppCompatActivity {
     public void click4(View view) {
         startActivity(new Intent(this, TriggerPoint2Activity.class));
     }
+
+    //管理多个独立动画
+    public void click5(View view) {
+        startActivity(new Intent(this, IndependenceActivity.class));
+    }
 }

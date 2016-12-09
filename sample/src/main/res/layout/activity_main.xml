@@ -26,5 +26,9 @@
         android:layout_height="wrap_content"
         android:onClick="click4"
         android:text="在依赖的动画执行到某个状态值(Object)时执行"/>
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="click5"
+        android:text="独立动画管理"/>
 </LinearLayout>

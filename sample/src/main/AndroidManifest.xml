@@ -11,6 +11,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -18,6 +19,8 @@
         <activity android:name=".SequenceActivity"/>
         <activity android:name=".TriggerPointActivity"/>
         <activity android:name=".TriggerPoint2Activity"/>
+        <activity android:name=".IndependenceActivity">
+        </activity>
     </application>
 
 </manifest>
