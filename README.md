@@ -5,7 +5,7 @@
 
 ##添加依赖
 ```groovy
-compile 'com.paulyung:actionanimatorset:1.1.0'
+compile 'com.paulyung:actionanimatorset:1.1.1'
 ```
 
 ##效果演示

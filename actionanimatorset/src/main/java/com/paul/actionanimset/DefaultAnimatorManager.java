@@ -73,7 +73,7 @@ public class DefaultAnimatorManager implements AnimatorManager {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    if (!hasCancled && node.startAciton != null)
+                    if (!hasCancled && node.endAction != null)
                         node.endAction.doAction();
                     hasCancled = false;
                 }
