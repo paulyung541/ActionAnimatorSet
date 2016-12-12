@@ -23,7 +23,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-version = "1.0.1"
+version = "1.1.0"
 
 def siteUrl = 'https://github.com/paulyung541/ActionAnimatorSet'
 def gitUrl = 'git@github.com:paulyung541/ActionAnimatorSet.git'
@@ -35,7 +35,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'ActionAnimationSet'
+                name 'ActionAnimatorSet'
                 description 'An Animation operation Set.'
                 url siteUrl
 
@@ -95,7 +95,7 @@ bintray {
     pkg {
         repo = "MAVEN"  // 上传到maven库。
         name = 'ActionAnimationSet'
-        userOrg = "paulyung" //bintray这逼改版了，少了这个属性，卡了老子一星期啊！！！
+        userOrg = "siyuan"//组织名
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

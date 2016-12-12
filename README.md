@@ -5,7 +5,7 @@
 
 ##添加依赖
 ```groovy
-compile 'com.paulyung:actionanimatorset:1.0.1'
+compile 'com.paulyung:actionanimatorset:1.1.0'
 ```
 
 ##效果演示
@@ -31,8 +31,32 @@ compile 'com.paulyung:actionanimatorset:1.0.1'
 * 1 **封装了动画监听**：`Animator.AnimatorListener`，不用单独再给属性动画设置监听器，直接用`addStartAction(Animator anim, Action start)`和`addEndAction(Animator anim, Action end)`可以监听动画执行前和动画执行后的动作，`Action`代表了一个动作。
 * 2 **动画的精准控制**：允许某个动画执行到某个点时，控制其它动画的开始
 
+##如何获取ActionAnimatorSet
+```java
+AnimatorManager manager = new DefaultAnimatorManager();
+ActionAnimatorSet animSet = manager.createAnimatorSet();
+```
 
-##主要使用的方法
+##AnimatorManager
+这是一个动画管理者，通过它创建动画集合`ActionAnimatorSet`，同时它也管理独立的动画，并能够通过Tag来寻找相应的动画。同时也能为它设置监听器，监听动画开始和结束。
+```java
+AnimatorManager manager = new DefaultAnimatorManager();
+ObjectAnimator animA = ObjectAnimator.ofFloat(view1, "y", 1200);
+manager.addAnimator(animA, "animA");
+manager.setOnStartListener("animA", new Action() {
+    @Override
+    public void doAction() {
+        showToast("view1开始了");
+    }
+});
+manager.build();//必须调用，才能使上面功能生效
+
+///
+manager.start("animA")
+
+```
+
+##ActionAnimatorSet主要使用的方法
 
 ```java
 void playFirst(Animator... anims)//添加头，最先执行
